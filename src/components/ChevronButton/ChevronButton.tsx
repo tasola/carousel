@@ -5,6 +5,7 @@ const directions = ["UP", "RIGHT", "DOWN", "LEFT"] as const;
 type Direction = typeof directions[number];
 
 interface Props {
+  onClick: () => void;
   src: string;
   alt: string;
   direction?: Direction;
@@ -33,9 +34,9 @@ const getButtonStyles = (direction: Direction, diameter: number) => {
   }
 }
 
-const ChevronButton = ({ src, alt, direction = "RIGHT", diameter = 40 }: Props) => {
+const ChevronButton = ({ onClick, src, alt, direction = "RIGHT", diameter = 40 }: Props) => {
   return (
-    <Click extend={getButtonStyles(direction, diameter)}>
+    <Click onClick={onClick} extend={getButtonStyles(direction, diameter)}>
       <Image
         src={src}
         alt={alt}
