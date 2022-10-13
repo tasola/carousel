@@ -2,48 +2,26 @@ import Image from "next/image";
 import { Block, Flex, Text } from "vcc-ui";
 import { Car } from "../../../shared/interfaces/car.interface";
 import LinkCollection from "../LinkCollection/LinkCollection";
+import styles from "./carProductCard.styles";
 
 interface Props {
   car: Car;
   tabbable: boolean;
 }
 
-const productWrapper = {
-  margin: "20px",
-};
-
-const imageWrapper = {
-  width: "100%",
-};
-
-const modelTextWrapper = {
-  flexFlow: "row",
-  marginBottom: "10px"
-};
-
-const modelTypeText = {
-  marginLeft: "5px",
-};
-
-const bodyTypeText = {
-  "text-transform": "uppercase",
-  // fontSize: "0.8rem",
-  // fontWeight: 800
-};
-
 const CarProductCard = ({ car, tabbable = true }: Props) => {
   return (
-    <Block extend={productWrapper}>
-      <Text foreground={"foreground.secondary"} extend={bodyTypeText}>
+    <Block extend={styles.productWrapper}>
+      <Text foreground={"foreground.secondary"} extend={styles.bodyTypeText}>
         {car.bodyType}
       </Text>
-      <Flex extend={modelTextWrapper}>
+      <Flex extend={styles.modelTextWrapper}>
         <Text subStyle="emphasis">{car.modelName}</Text>
-        <Text foreground={"foreground.secondary"} extend={modelTypeText}>
+        <Text foreground={"foreground.secondary"} extend={styles.modelTypeText}>
           {car.modelType}
         </Text>
       </Flex>
-      <Block extend={imageWrapper}>
+      <Block extend={styles.imageWrapper}>
         <Image
           src={car.imageUrl}
           alt={`${car.modelName} viewed from the side`}

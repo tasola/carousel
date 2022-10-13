@@ -1,4 +1,5 @@
 import { Flex, Link } from "vcc-ui";
+import styles from "./linkCollection.styles";
 
 interface Props {
   links: Link[];
@@ -11,20 +12,9 @@ interface Link {
   withArrow?: boolean;
 }
 
-const linkWrapper = {
-  flexFlow: "row",
-  width: "80%",
-  margin: "0 auto",
-  justifyContent: "space-around",
-
-  "@media (max-width: 576px)": {
-    width: "60%",
-  }
-};
-
 const LinkCollection = ({ links }: Props) => {
   return (
-    <Flex extend={linkWrapper}>
+    <Flex extend={styles.linkWrapper}>
       {links.map((link) => (
         <Link
           href={link.href}

@@ -1,20 +1,16 @@
 import { CurrentTheme, ExtendPropValue, Flex } from "vcc-ui";
 import { SlideDirection } from "../Carousel/Carousel";
-import ChevronButton from "../ChevronButton/ChevronButton";
+import ChevronButton from "../../ChevronButton/ChevronButton";
+import styles from "./carouselControl.styles";
 
 interface Props {
   changeSlide: (slideDirection: SlideDirection) => void;
   extend?: ExtendPropValue<CurrentTheme, {}>;
 }
 
-const carouselControl = {
-  flexFlow: "row",
-  justifyContent: "flex-end",
-};
-
 const CarouselControl = ({ changeSlide, extend }: Props) => {
   return (
-    <Flex extend={{ ...carouselControl, ...extend }}>
+    <Flex extend={{ ...styles.carouselControl, ...extend }}>
       <ChevronButton
         onClick={() => changeSlide("PREVIOUS")}
         src="/icons/chevron-circled.svg"

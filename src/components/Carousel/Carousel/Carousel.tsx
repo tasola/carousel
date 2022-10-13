@@ -1,43 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Block, CurrentTheme, ExtendPropValue, Flex } from "vcc-ui";
-import { breakpoints } from "../../../public/css/variables";
-import { Car } from "../../../shared/interfaces/car.interface";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { Block, Flex } from "vcc-ui";
+import { breakpoints } from "../../../../public/css/variables";
+import { Car } from "../../../../shared/interfaces/car.interface";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import CarProductCard from "../../CarProductCard/CarProductCard";
+import SlideIndicator from "../../SlideIndicator/SlideIndicator";
 import CarouselControl from "../CarouselControl/CarouselControl";
-import CarProductCard from "../CarProductCard/CarProductCard";
-import SlideIndicator from "../SlideIndicator/SlideIndicator";
+import styles from "./carousel.styles";
 
 interface Props {
   cars: Car[];
 }
 
 export type SlideDirection = "NEXT" | "PREVIOUS";
-
-const carouselWindow = {
-  overflow: "hidden",
-};
-
-const getCarouselStyle = (
-  amountOfItems: number,
-  carsPerSlide: number,
-  activeSlideIndex: number
-): ExtendPropValue<CurrentTheme, {}> => {
-  return {
-    "flex-direction": "row",
-    flexShrink: 0,
-    width: `${amountOfItems * (100 / carsPerSlide)}vw`,
-    transitionProperty: "transform",
-    transitionDuration: "0.4s",
-    transform: `translateX(-${activeSlideIndex * 100}vw)`,
-  };
-};
-
-const carouselControl = {
-  marginRight: "20px",
-  "@media (max-width: 576px)": {
-    display: "none",
-  },
-};
 
 const getAmountOfCarsToDisplayPerSlide = (windowWidth: number): number => {
   if (windowWidth < breakpoints.small) {
@@ -124,9 +99,13 @@ const Carousel = ({ cars }: Props): JSX.Element => {
 
   return (
     <Block>
-      <Flex extend={carouselWindow}>
+      <Flex extend={styles.carouselWindow}>
         <Flex
-          extend={getCarouselStyle(cars.length, carsPerSlide, activeSlideIndex)}
+          extend={styles.getCarouselStyle(
+            cars.length,
+            carsPerSlide,
+            activeSlideIndex
+          )}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
         >
@@ -140,7 +119,10 @@ const Carousel = ({ cars }: Props): JSX.Element => {
         </Flex>
       </Flex>
       {carsPerSlide > 1 ? (
-        <CarouselControl extend={carouselControl} changeSlide={changeSlide} />
+        <CarouselControl
+          extend={styles.carouselControl}
+          changeSlide={changeSlide}
+        />
       ) : (
         <SlideIndicator
           slidesAmount={cars.length}
