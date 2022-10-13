@@ -1,3 +1,4 @@
+import { Block } from "vcc-ui";
 import cars from "../public/api/cars.json";
 import { Car } from "../shared/interfaces/car.interface";
 import Carousel from "../src/components/Carousel/Carousel";
@@ -8,9 +9,9 @@ interface Props {
 
 const HomePage = ({ cars }: Props) => {
   return (
-    <div>
+    <Block>
       <Carousel cars={cars} />
-    </div>
+    </Block>
   );
 };
 

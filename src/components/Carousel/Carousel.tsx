@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { Flex } from "vcc-ui";
+import React, { useEffect, useState } from "react";
+import { Block, CurrentTheme, ExtendPropValue, Flex } from "vcc-ui";
+import { breakpoints } from "../../../public/css/variables";
 import { Car } from "../../../shared/interfaces/car.interface";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 import CarouselControl from "../CarouselControl/CarouselControl";
 import CarProductCard from "../CarProductCard/CarProductCard";
+import SlideIndicator from "../SlideIndicator/SlideIndicator";
 
 interface Props {
   cars: Car[];
@@ -10,10 +13,60 @@ interface Props {
 
 export type SlideDirection = "NEXT" | "PREVIOUS";
 
-const CARS_PER_SLIDE = 4;
+const carouselWindow = {
+  overflow: "hidden",
+};
+
+const getCarouselStyle = (
+  amountOfItems: number,
+  carsPerSlide: number,
+  activeSlideIndex: number
+): ExtendPropValue<CurrentTheme, {}> => {
+  return {
+    "flex-direction": "row",
+    flexShrink: 0,
+    width: `${amountOfItems * (100 / carsPerSlide)}vw`,
+    transitionProperty: "transform",
+    transitionDuration: "0.4s",
+    transform: `translateX(-${activeSlideIndex * 100}vw)`,
+  };
+};
+
+const carouselControl = {
+  marginRight: "20px",
+  "@media (max-width: 576px)": {
+    display: "none",
+  },
+};
+
+const getAmountOfCarsToDisplayPerSlide = (windowWidth: number): number => {
+  if (windowWidth < breakpoints.small) {
+    return 1;
+  }
+
+  if (windowWidth < breakpoints.medium) {
+    return 2;
+  }
+
+  if (windowWidth < breakpoints.large) {
+    return 3;
+  }
+
+  return 4;
+};
 
 const Carousel = ({ cars }: Props): JSX.Element => {
+  const windowDimensions = useWindowDimensions();
+
+  const [carsPerSlide, setCarsPerSlide] = useState(
+    getAmountOfCarsToDisplayPerSlide(windowDimensions.width)
+  );
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [touchPosition, setTouchPosition] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCarsPerSlide(getAmountOfCarsToDisplayPerSlide(windowDimensions.width));
+  }, [windowDimensions.width]);
 
   const getNewSlideIndex = (slideDirection: SlideDirection): number => {
     if (slideDirection === "NEXT") {
@@ -23,7 +76,7 @@ const Carousel = ({ cars }: Props): JSX.Element => {
   };
 
   const changeSlide = (slideDirection: SlideDirection) => {
-    const amountOfSlides = Math.ceil(cars.length / CARS_PER_SLIDE);
+    const amountOfSlides = Math.ceil(cars.length / carsPerSlide);
     const newSlideIndex = getNewSlideIndex(slideDirection);
 
     if (newSlideIndex < 0) {
@@ -35,24 +88,52 @@ const Carousel = ({ cars }: Props): JSX.Element => {
     setActiveSlideIndex(newSlideIndex);
   };
 
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const touchPosition = event.touches[0].clientX;
+    setTouchPosition(touchPosition);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    const previousTouchPosition = touchPosition;
+
+    if (previousTouchPosition === null) {
+        return;
+    }
+
+    const newTouchPosition = event.touches[0].clientX;
+    const delta = previousTouchPosition - newTouchPosition;
+
+    if (delta > 3) {
+        changeSlide("NEXT");
+    } else if (delta < -3) {
+      changeSlide("PREVIOUS");
+    }
+
+    setTouchPosition(null);
+  }
+
   return (
-    <div>
-      <Flex
-        extend={{
-          flexDirection: "row",
-          flexShrink: 0,
-          width: `${cars.length * (100 / CARS_PER_SLIDE)}vw`,
-          transitionProperty: "transform",
-          transitionDuration: "0.4s",
-          transform: `translateX(-${activeSlideIndex * 100}vw)`,
-        }}
-      >
-        {cars.map((car) => (
-          <CarProductCard key={car.id} car={car} />
-        ))}
+    <Block>
+      <Flex extend={carouselWindow}>
+        <Flex
+          extend={getCarouselStyle(cars.length, carsPerSlide, activeSlideIndex)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
+          {cars.map((car) => (
+            <CarProductCard key={car.id} car={car} />
+          ))}
+        </Flex>
       </Flex>
-      <CarouselControl changeSlide={changeSlide} />
-    </div>
+      {carsPerSlide > 1 ? (
+        <CarouselControl extend={carouselControl} changeSlide={changeSlide} />
+      ) : (
+        <SlideIndicator
+          slidesAmount={cars.length}
+          activeSlideIndex={activeSlideIndex}
+        />
+      )}
+    </Block>
   );
 };
 

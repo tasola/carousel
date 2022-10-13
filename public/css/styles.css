@@ -1,4 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background: white;
+  background: #ffffffa7;
   color: rgb(20, 20, 20)
 }
