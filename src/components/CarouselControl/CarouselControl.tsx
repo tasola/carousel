@@ -4,13 +4,13 @@ import ChevronButton from "../ChevronButton/ChevronButton";
 
 interface Props {
   changeSlide: (slideDirection: SlideDirection) => void;
-  extend?: ExtendPropValue<CurrentTheme, {}>
+  extend?: ExtendPropValue<CurrentTheme, {}>;
 }
 
 const carouselControl = {
   flexFlow: "row",
-  justifyContent: "flex-end"
-}
+  justifyContent: "flex-end",
+};
 
 const CarouselControl = ({ changeSlide, extend }: Props) => {
   return (

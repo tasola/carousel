@@ -5,19 +5,20 @@ import LinkCollection from "../LinkCollection/LinkCollection";
 
 interface Props {
   car: Car;
+  tabbable: boolean;
 }
 
 const productWrapper = {
   margin: "20px",
-}
+};
 
 const imageWrapper = {
-  // position: "relative",
   width: "100%",
 };
 
 const modelTextWrapper = {
   flexFlow: "row",
+  marginBottom: "10px"
 };
 
 const modelTypeText = {
@@ -30,7 +31,7 @@ const bodyTypeText = {
   // fontWeight: 800
 };
 
-const CarProductCard = ({ car }: Props) => {
+const CarProductCard = ({ car, tabbable = true }: Props) => {
   return (
     <Block extend={productWrapper}>
       <Text foreground={"foreground.secondary"} extend={bodyTypeText}>
@@ -55,10 +56,12 @@ const CarProductCard = ({ car }: Props) => {
           {
             href: `/learn/${car.id}`,
             label: "Learn",
+            tabbable,
           },
           {
             href: `/shop/${car.id}`,
             label: "Shop",
+            tabbable,
           },
         ]}
       />

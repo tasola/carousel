@@ -7,14 +7,19 @@ interface Props {
 interface Link {
   href: string;
   label: string;
+  tabbable?: boolean;
   withArrow?: boolean;
 }
 
 const linkWrapper = {
   flexFlow: "row",
-  width: "50%",
+  width: "80%",
   margin: "0 auto",
-  justifyContent: "space-between",
+  justifyContent: "space-around",
+
+  "@media (max-width: 576px)": {
+    width: "60%",
+  }
 };
 
 const LinkCollection = ({ links }: Props) => {
@@ -25,6 +30,7 @@ const LinkCollection = ({ links }: Props) => {
           href={link.href}
           key={link.href}
           arrow={link.withArrow === false ? null : "right"}
+          tabIndex={link.tabbable === false ? -1 : 0}
         >
           {link.label}
         </Link>

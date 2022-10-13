@@ -59,14 +59,24 @@ const Carousel = ({ cars }: Props): JSX.Element => {
   const windowDimensions = useWindowDimensions();
 
   const [carsPerSlide, setCarsPerSlide] = useState(
-    getAmountOfCarsToDisplayPerSlide(windowDimensions.width)
+    getAmountOfCarsToDisplayPerSlide(0)
   );
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [touchPosition, setTouchPosition] = useState<number | null>(null);
+  const [visibleItemIndices, setVisibleItemIndices] = useState([
+    ...Array(carsPerSlide).keys(),
+  ]);
 
   useEffect(() => {
     setCarsPerSlide(getAmountOfCarsToDisplayPerSlide(windowDimensions.width));
   }, [windowDimensions.width]);
+
+  useEffect(() => {
+    const visibleItemIndices = [...Array(carsPerSlide).keys()].map(
+      (index) => index + activeSlideIndex * carsPerSlide
+    );
+    setVisibleItemIndices(visibleItemIndices);
+  }, [carsPerSlide, activeSlideIndex]);
 
   const getNewSlideIndex = (slideDirection: SlideDirection): number => {
     if (slideDirection === "NEXT") {
@@ -97,20 +107,20 @@ const Carousel = ({ cars }: Props): JSX.Element => {
     const previousTouchPosition = touchPosition;
 
     if (previousTouchPosition === null) {
-        return;
+      return;
     }
 
     const newTouchPosition = event.touches[0].clientX;
     const delta = previousTouchPosition - newTouchPosition;
 
     if (delta > 3) {
-        changeSlide("NEXT");
+      changeSlide("NEXT");
     } else if (delta < -3) {
       changeSlide("PREVIOUS");
     }
 
     setTouchPosition(null);
-  }
+  };
 
   return (
     <Block>
@@ -120,8 +130,12 @@ const Carousel = ({ cars }: Props): JSX.Element => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
         >
-          {cars.map((car) => (
-            <CarProductCard key={car.id} car={car} />
+          {cars.map((car, index) => (
+            <CarProductCard
+              key={car.id}
+              car={car}
+              tabbable={visibleItemIndices.includes(index)}
+            />
           ))}
         </Flex>
       </Flex>
