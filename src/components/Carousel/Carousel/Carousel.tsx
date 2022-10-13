@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Block, Flex } from "vcc-ui";
 import { breakpoints } from "../../../../public/css/variables";
-import { Car } from "../../../../shared/interfaces/car.interface";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
-import CarProductCard from "../../CarProductCard/CarProductCard";
 import SlideIndicator from "../../SlideIndicator/SlideIndicator";
 import CarouselControl from "../CarouselControl/CarouselControl";
 import styles from "./carousel.styles";
 
 interface Props {
-  cars: Car[];
+  amountOfItems: number;
+  children: (visibleItemIndices: number[]) => React.ReactNode[];
 }
 
 export type SlideDirection = "NEXT" | "PREVIOUS";
 
-const getAmountOfCarsToDisplayPerSlide = (windowWidth: number): number => {
+const getAmountOfItemsToDisplayPerSlide = (windowWidth: number): number => {
   if (windowWidth < breakpoints.small) {
     return 1;
   }
@@ -30,28 +29,28 @@ const getAmountOfCarsToDisplayPerSlide = (windowWidth: number): number => {
   return 4;
 };
 
-const Carousel = ({ cars }: Props): JSX.Element => {
+const Carousel = ({ amountOfItems, children }: Props): JSX.Element => {
   const windowDimensions = useWindowDimensions();
 
-  const [carsPerSlide, setCarsPerSlide] = useState(
-    getAmountOfCarsToDisplayPerSlide(0)
+  const [itemsPerSlide, setItemsPerSlide] = useState(
+    getAmountOfItemsToDisplayPerSlide(0)
   );
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [touchPosition, setTouchPosition] = useState<number | null>(null);
   const [visibleItemIndices, setVisibleItemIndices] = useState([
-    ...Array(carsPerSlide).keys(),
+    ...Array(itemsPerSlide).keys(),
   ]);
 
   useEffect(() => {
-    setCarsPerSlide(getAmountOfCarsToDisplayPerSlide(windowDimensions.width));
+    setItemsPerSlide(getAmountOfItemsToDisplayPerSlide(windowDimensions.width));
   }, [windowDimensions.width]);
 
   useEffect(() => {
-    const visibleItemIndices = [...Array(carsPerSlide).keys()].map(
-      (index) => index + activeSlideIndex * carsPerSlide
+    const visibleItemIndices = [...Array(itemsPerSlide).keys()].map(
+      (index) => index + activeSlideIndex * itemsPerSlide
     );
     setVisibleItemIndices(visibleItemIndices);
-  }, [carsPerSlide, activeSlideIndex]);
+  }, [itemsPerSlide, activeSlideIndex]);
 
   const getNewSlideIndex = (slideDirection: SlideDirection): number => {
     if (slideDirection === "NEXT") {
@@ -61,7 +60,7 @@ const Carousel = ({ cars }: Props): JSX.Element => {
   };
 
   const changeSlide = (slideDirection: SlideDirection) => {
-    const amountOfSlides = Math.ceil(cars.length / carsPerSlide);
+    const amountOfSlides = Math.ceil(amountOfItems / itemsPerSlide);
     const newSlideIndex = getNewSlideIndex(slideDirection);
 
     if (newSlideIndex < 0) {
@@ -102,30 +101,24 @@ const Carousel = ({ cars }: Props): JSX.Element => {
       <Flex extend={styles.carouselWindow}>
         <Flex
           extend={styles.getCarouselStyle(
-            cars.length,
-            carsPerSlide,
+            amountOfItems,
+            itemsPerSlide,
             activeSlideIndex
           )}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
         >
-          {cars.map((car, index) => (
-            <CarProductCard
-              key={car.id}
-              car={car}
-              tabbable={visibleItemIndices.includes(index)}
-            />
-          ))}
+          {children(visibleItemIndices)}
         </Flex>
       </Flex>
-      {carsPerSlide > 1 ? (
+      {itemsPerSlide > 1 ? (
         <CarouselControl
           extend={styles.carouselControl}
           changeSlide={changeSlide}
         />
       ) : (
         <SlideIndicator
-          slidesAmount={cars.length}
+          slidesAmount={amountOfItems}
           activeSlideIndex={activeSlideIndex}
         />
       )}
