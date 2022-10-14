@@ -11,7 +11,6 @@ const getCarouselStyle = (
 ): ExtendPropValue<CurrentTheme, {}> => {
   return {
     "flex-direction": "row",
-    flexShrink: 0,
     width: `${amountOfItems * (100 / carsPerSlide)}vw`,
     transitionProperty: "transform",
     transitionDuration: "0.4s",

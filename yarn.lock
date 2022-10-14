@@ -1865,17 +1865,6 @@ fela-bindings@^11.7.0:
     react-addons-shallow-compare "^15.6.2"
     shallow-equal "^1.0.0"
 
-fela-bindings@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/fela-bindings/-/fela-bindings-12.2.0.tgz"
-  integrity sha512-aSUdgTcME5I9doqX/017FdQQRnoIWKGZDmaQqHPHAp14QBMbppC3cC79vHeFOHwnH7DcxnnFv7DSeCl77g40ug==
-  dependencies:
-    fast-loops "^1.0.0"
-    fela-dom "^12.2.0"
-    fela-tools "^12.2.0"
-    react-addons-shallow-compare "^15.6.3"
-    shallow-equal "^1.0.0"
-
 fela-dom@^11.3.3, fela-dom@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-11.7.0.tgz#8706aaedf348af6e2d761d38c0f97d8d6607a99b"
@@ -1884,16 +1873,6 @@ fela-dom@^11.3.3, fela-dom@^11.7.0:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.1"
     fela-utils "^11.7.0"
-    sort-css-media-queries "^1.4.3"
-
-fela-dom@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/fela-dom/-/fela-dom-12.2.0.tgz"
-  integrity sha512-wPIIL2rSyGqR8JxIBiARnOT5nx4UlDeJjYWzVTOntTogBiUne3KNjJtJlAhwtujjAQmbzT1VFNGoD3G8d45evg==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.1"
-    fela-utils "^12.2.0"
     sort-css-media-queries "^1.4.3"
 
 fela-plugin-embedded@^11.3.3:
@@ -1996,28 +1975,10 @@ fela-tools@^11.3.3, fela-tools@^11.7.0:
     fela "^11.7.0"
     fela-utils "^11.7.0"
 
-fela-tools@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/fela-tools/-/fela-tools-12.2.0.tgz"
-  integrity sha512-mba2xQUyNfJBwHeMW39W6z73Yytf6PNHXwApj7Z69Pdc1/imA7xHUs3zQnFMZ33fd7K0c1TaBGhmaiDjOkBzlA==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.0"
-    fela "^12.2.0"
-    fela-utils "^12.2.0"
-
 fela-utils@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-11.7.0.tgz#ad91df64320d005ae131a8ad72f9ce7454198428"
   integrity sha512-s/3QJtkCesH+2/yJDpedHVAvMgKy9hSt2++6l7Xjio5BixiUnvkwbqdCV/fcAb4E3reJLNzYeatgPdcw4HVXRQ==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.0"
-
-fela-utils@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/fela-utils/-/fela-utils-12.2.0.tgz"
-  integrity sha512-lGscG9H1QAfD7614sNBEcJlTVvD8CusX4QAkWPFaEzhwc7FMW6arDFlMTdSvasrQir8bLmKdlXdPgUnYaDnt7w==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
@@ -2031,17 +1992,6 @@ fela@^11.3.3, fela@^11.7.0:
     csstype "^3.0.5"
     fast-loops "^1.0.0"
     fela-utils "^11.7.0"
-    isobject "^3.0.1"
-
-fela@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.npmjs.org/fela/-/fela-12.2.0.tgz"
-  integrity sha512-iwa09Zjm052C2DSVNtVclrmYIXVmaSlU2UWT3AVDvxZJ5OFRI88pgFczr5z0Lkq2SLC6xxCxIO3uHcG1WqI9Qg==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    csstype "^3.0.5"
-    fast-loops "^1.0.0"
-    fela-utils "^12.2.0"
     isobject "^3.0.1"
 
 file-entry-cache@^6.0.1:
@@ -3409,7 +3359,7 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-addons-shallow-compare@^15.6.2, react-addons-shallow-compare@^15.6.3:
+react-addons-shallow-compare@^15.6.2:
   version "15.6.3"
   resolved "https://registry.npmjs.org/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.3.tgz"
   integrity sha512-EDJbgKTtGRLhr3wiGDXK/+AEJ59yqGS+tKE6mue0aNXT6ZMR7VJbbzIiT6akotmHg1BLj46ElJSb+NBMp80XBg==
@@ -3432,15 +3382,6 @@ react-fela@^11.3.3:
   dependencies:
     fela-bindings "^11.7.0"
     fela-dom "^11.7.0"
-    prop-types "^15.5.8"
-
-react-fela@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-12.2.0.tgz#3aa868cc216a51625d605524d5a91675dcb7dd56"
-  integrity sha512-bAe7ve5vnRPfDi7Nsba1vQU4q2VtZWFapTze+qCVxV01XmsMcNdsOoyEVYJkoBJNGw+xLTpEb74asvz9tHhPWw==
-  dependencies:
-    fela-bindings "^12.2.0"
-    fela-dom "^12.2.0"
     prop-types "^15.5.8"
 
 react-is@^16.13.1:

@@ -6,18 +6,19 @@ import styles from "./carProductCard.styles";
 
 interface Props {
   car: Car;
-  tabbable: boolean;
+  isVisible?: boolean;
+  as?: React.ElementType;
 }
 
-const CarProductCard = ({ car, tabbable = true }: Props) => {
+const CarProductCard = ({ car, isVisible = true, as = "div" }: Props) => {
   return (
-    <Block extend={styles.productWrapper}>
-      <Text foreground={"foreground.secondary"} extend={styles.bodyTypeText}>
+    <Block extend={styles.productWrapper} as={as} aria-hidden={!isVisible}>
+      <Text foreground={"foreground.secondary"} extend={styles.bodyTypeText} as="h4">
         {car.bodyType}
       </Text>
       <Flex extend={styles.modelTextWrapper}>
-        <Text subStyle="emphasis">{car.modelName}</Text>
-        <Text foreground={"foreground.secondary"} extend={styles.modelTypeText}>
+        <Text subStyle="emphasis" as="h3">{car.modelName}</Text>
+        <Text foreground={"foreground.secondary"} extend={styles.modelTypeText} as="h4">
           {car.modelType}
         </Text>
       </Flex>
@@ -34,12 +35,14 @@ const CarProductCard = ({ car, tabbable = true }: Props) => {
           {
             href: `/learn/${car.id}`,
             label: "Learn",
-            tabbable,
+            tabbable: isVisible,
+            ariaLabel: `Learn about ${car.modelName}`
           },
           {
             href: `/shop/${car.id}`,
             label: "Shop",
-            tabbable,
+            tabbable: isVisible,
+            ariaLabel: `Shop ${car.modelName}`
           },
         ]}
       />

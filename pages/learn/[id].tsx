@@ -5,7 +5,7 @@ const LearnPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  return <Text>{`Larn page for car with id ${id} not implemented yet!`}</Text>;
+  return <Text>{`Learn page for car with id ${id} not implemented yet!`}</Text>;
 };
 
 export default LearnPage;

@@ -7,6 +7,8 @@ interface Props {
   activeSlideIndex: number;
 }
 
+// a11y design suggestion: These dots should be larger than the design suggests,
+// and potentially have higher contrast colors.
 const SlideIndicator = ({ slidesAmount, activeSlideIndex }: Props) => {
   return (
     <Flex extend={styles.slideIndicator}>

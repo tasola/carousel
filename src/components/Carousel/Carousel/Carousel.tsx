@@ -9,6 +9,7 @@ import styles from "./carousel.styles";
 interface Props {
   amountOfItems: number;
   children: (visibleItemIndices: number[]) => React.ReactNode[];
+  ariaLabel: string;
 }
 
 export type SlideDirection = "NEXT" | "PREVIOUS";
@@ -29,7 +30,7 @@ const getAmountOfItemsToDisplayPerSlide = (windowWidth: number): number => {
   return 4;
 };
 
-const Carousel = ({ amountOfItems, children }: Props): JSX.Element => {
+const Carousel = ({ amountOfItems, children, ariaLabel }: Props): JSX.Element => {
   const windowDimensions = useWindowDimensions();
 
   const [itemsPerSlide, setItemsPerSlide] = useState(
@@ -107,6 +108,8 @@ const Carousel = ({ amountOfItems, children }: Props): JSX.Element => {
           )}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
+          as="ul"
+          aria-label={ariaLabel}
         >
           {children(visibleItemIndices)}
         </Flex>
@@ -115,6 +118,8 @@ const Carousel = ({ amountOfItems, children }: Props): JSX.Element => {
         <CarouselControl
           extend={styles.carouselControl}
           changeSlide={changeSlide}
+          activeSlideIndex={activeSlideIndex}
+          amountOfSlides={Math.ceil(amountOfItems / itemsPerSlide)}
         />
       ) : (
         <SlideIndicator

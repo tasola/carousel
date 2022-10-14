@@ -8,6 +8,7 @@ interface Props {
 interface Link {
   href: string;
   label: string;
+  ariaLabel: string;
   tabbable?: boolean;
   withArrow?: boolean;
 }
@@ -21,6 +22,7 @@ const LinkCollection = ({ links }: Props) => {
           key={link.href}
           arrow={link.withArrow === false ? null : "right"}
           tabIndex={link.tabbable === false ? -1 : 0}
+          aria-label={link.ariaLabel}
         >
           {link.label}
         </Link>
